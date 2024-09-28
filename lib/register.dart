@@ -77,7 +77,7 @@ class _RegisterState extends State<Register> {
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Container(
@@ -192,7 +192,9 @@ class _RegisterState extends State<Register> {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).pushReplacementNamed("/HomeScreen");
+                  },
                   style: ButtonStyle(
                     backgroundColor: WidgetStateProperty.all(
                         Theme.of(context).colorScheme.primary.withOpacity(.8)),
