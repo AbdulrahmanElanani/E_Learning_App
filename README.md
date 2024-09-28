@@ -1,4 +1,4 @@
-# project_1st
+# E-Learning App
 
 A new Flutter project.
 
