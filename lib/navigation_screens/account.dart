@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:svg_flutter/svg.dart';
 
@@ -300,9 +301,8 @@ class Account extends StatelessWidget {
                   Column(
                     children: [
                       ElevatedButton(
-                        onPressed: () {
-                          Navigator.of(context)
-                              .pushReplacementNamed("/LoginScreen");
+                        onPressed: () async{
+    await FirebaseAuth.instance.signOut();
                         },
                         style: ButtonStyle(
                           backgroundColor: WidgetStatePropertyAll(
