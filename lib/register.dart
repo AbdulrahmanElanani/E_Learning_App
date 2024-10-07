@@ -15,7 +15,7 @@ class Register extends StatefulWidget {
 
 class _RegisterState extends State<Register> {
   final ImagePicker picker = ImagePicker();
-  bool isVisible = true;
+  bool isVisible = false;
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   bool isLoading = false;
@@ -78,7 +78,6 @@ class _RegisterState extends State<Register> {
     });
   }
 
-
   File? attachImage;
 
 // Pick an image.
@@ -91,6 +90,7 @@ class _RegisterState extends State<Register> {
       attachImage = File(image.path);
     });
   }
+
   @override
   void dispose() {
     emailController.dispose();
@@ -256,7 +256,7 @@ class _RegisterState extends State<Register> {
                     },
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     controller: passwordController,
-                    obscureText: isVisible ? true : false,
+                    obscureText: isVisible ? false : true,
                     keyboardType: TextInputType.visiblePassword,
                     textInputAction: TextInputAction.next,
                     decoration: InputDecoration(
@@ -319,7 +319,8 @@ class _RegisterState extends State<Register> {
                             ? Border.all(color: Colors.green)
                             : Border.all(color: Colors.grey.shade400),
                         shape: BoxShape.circle,
-                        color: isPasswordHas1number ? Colors.green : Colors.white,
+                        color:
+                            isPasswordHas1number ? Colors.green : Colors.white,
                       ),
                       child: const Icon(
                         Icons.check,
@@ -346,8 +347,9 @@ class _RegisterState extends State<Register> {
                             ? Border.all(color: Colors.green)
                             : Border.all(color: Colors.grey.shade400),
                         shape: BoxShape.circle,
-                        color:
-                            isPasswordHasUppercase ? Colors.green : Colors.white,
+                        color: isPasswordHasUppercase
+                            ? Colors.green
+                            : Colors.white,
                       ),
                       child: const Icon(
                         Icons.check,
@@ -374,8 +376,9 @@ class _RegisterState extends State<Register> {
                             ? Border.all(color: Colors.green)
                             : Border.all(color: Colors.grey.shade400),
                         shape: BoxShape.circle,
-                        color:
-                            isPasswordHasLowercase ? Colors.green : Colors.white,
+                        color: isPasswordHasLowercase
+                            ? Colors.green
+                            : Colors.white,
                       ),
                       child: const Icon(
                         Icons.check,
@@ -443,8 +446,10 @@ class _RegisterState extends State<Register> {
                       }
                     },
                     style: ButtonStyle(
-                      backgroundColor: WidgetStateProperty.all(
-                          Theme.of(context).colorScheme.primary.withOpacity(.8)),
+                      backgroundColor: WidgetStateProperty.all(Theme.of(context)
+                          .colorScheme
+                          .primary
+                          .withOpacity(.8)),
                       padding: const WidgetStatePropertyAll(EdgeInsets.all(20)),
                     ),
                     child: isLoading
@@ -475,8 +480,8 @@ class _RegisterState extends State<Register> {
                       width: 100,
                       child: TextButton(
                         onPressed: () {
-                          Navigator.of(context)
-                              .pushReplacementNamed("/LoginScreen");
+                          Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(builder: (_) => const Login()));
                         },
                         style: const ButtonStyle(
                           padding: WidgetStatePropertyAll(EdgeInsets.all(5)),

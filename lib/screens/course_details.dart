@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../model/programming_course.dart';
 import '../providers/cart_provider.dart';
@@ -199,7 +202,19 @@ class _CourseDetailsState extends ConsumerState<CourseDetails> {
                       label: Text(addOrRemove),
                     ),
                     ElevatedButton.icon(
-                      onPressed: () {},
+                      onPressed: () async {
+                        try {
+                          await canLaunch(
+                                  "https://youtu.be/RCgj3Gl053A?si=nvQclWSjz2e7ksyN")
+                              ? await launch(
+                                  enableJavaScript: true,
+                                  forceWebView: true,
+                                  "https://youtu.be/RCgj3Gl053A?si=nvQclWSjz2e7ksyN")
+                              : throw "error";
+                        } catch (e) {
+                          log(e.toString());
+                        }
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color.fromARGB(255, 224, 47, 34),
                         foregroundColor: Colors.white,

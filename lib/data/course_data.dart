@@ -1,4 +1,4 @@
-import '../model/programming_course.dart';
+import 'package:project_1st/model/programming_course.dart';
 
 List<ProgrammingCourse> programmingCourses = [
   ProgrammingCourse(
@@ -16,6 +16,11 @@ List<ProgrammingCourse> programmingCourses = [
       'Functions and Methods',
       'Object-Oriented Programming in Dart',
     ],
+    categories: [
+      Category.mobiledevelopment,
+      Category.webdevelopment,
+      Category.all
+    ],
   ),
   ProgrammingCourse(
     id: 2,
@@ -32,6 +37,7 @@ List<ProgrammingCourse> programmingCourses = [
       'Navigation and Routing',
       'Using APIs in Flutter',
     ],
+    categories: [Category.mobiledevelopment, Category.all],
   ),
   ProgrammingCourse(
     id: 3,
@@ -47,6 +53,11 @@ List<ProgrammingCourse> programmingCourses = [
       'Loops and Conditional Statements',
       'Object-Oriented Programming',
       'Exception Handling',
+    ],
+    categories: [
+      Category.mobiledevelopment,
+      Category.webdevelopment,
+      Category.all
     ],
   ),
   ProgrammingCourse(
@@ -64,6 +75,7 @@ List<ProgrammingCourse> programmingCourses = [
       'Networking and APIs',
       'Publishing Apps to Play Store',
     ],
+    categories: [Category.mobiledevelopment, Category.all],
   ),
   ProgrammingCourse(
     id: 5,
@@ -80,6 +92,7 @@ List<ProgrammingCourse> programmingCourses = [
       'File Handling',
       'Object-Oriented Programming',
     ],
+    categories: [Category.datascience, Category.ai, Category.all],
   ),
   ProgrammingCourse(
     id: 6,
@@ -96,6 +109,7 @@ List<ProgrammingCourse> programmingCourses = [
       'Object-Oriented Programming',
       'Error and Exception Handling',
     ],
+    categories: [Category.datascience, Category.ai, Category.all],
   ),
   ProgrammingCourse(
     id: 7,
@@ -111,6 +125,7 @@ List<ProgrammingCourse> programmingCourses = [
       'React Hooks',
       'Handling Events',
     ],
+    categories: [Category.webdevelopment, Category.all],
   ),
   ProgrammingCourse(
     id: 8,
@@ -127,6 +142,7 @@ List<ProgrammingCourse> programmingCourses = [
       'Authentication and Authorization',
       'Deploying Node.js Apps',
     ],
+    categories: [Category.webdevelopment, Category.all],
   ),
   ProgrammingCourse(
     id: 9,
@@ -143,6 +159,7 @@ List<ProgrammingCourse> programmingCourses = [
       'Working with MongoDB',
       'Deploying Full Stack Applications',
     ],
+    categories: [Category.webdevelopment, Category.all],
   ),
   ProgrammingCourse(
     id: 10,
@@ -159,6 +176,7 @@ List<ProgrammingCourse> programmingCourses = [
       'Neural Networks with TensorFlow',
       'Evaluating and Tuning Models',
     ],
+    categories: [Category.ai, Category.datascience, Category.all],
   ),
   ProgrammingCourse(
     id: 11,
@@ -175,6 +193,7 @@ List<ProgrammingCourse> programmingCourses = [
       'AI Applications in Real-World',
       'Ethics in AI',
     ],
+    categories: [Category.ai, Category.all],
   ),
   ProgrammingCourse(
     id: 12,
@@ -191,6 +210,7 @@ List<ProgrammingCourse> programmingCourses = [
       'Machine Learning with Scikit-learn',
       'Deploying Data Science Projects',
     ],
+    categories: [Category.datascience, Category.all],
   ),
   ProgrammingCourse(
     id: 13,
@@ -207,6 +227,7 @@ List<ProgrammingCourse> programmingCourses = [
       'JavaScript Fundamentals',
       'Responsive Design',
     ],
+    categories: [Category.webdevelopment, Category.all],
   ),
   ProgrammingCourse(
     id: 14,
@@ -222,6 +243,7 @@ List<ProgrammingCourse> programmingCourses = [
       'Database Management',
       'SQL Best Practices',
     ],
+    categories: [Category.datascience, Category.all],
   ),
   ProgrammingCourse(
     id: 15,
@@ -238,5 +260,6 @@ List<ProgrammingCourse> programmingCourses = [
       'Containerization with Docker',
       'Kubernetes for Orchestration',
     ],
+    categories: [Category.devops, Category.all],
   ),
 ];

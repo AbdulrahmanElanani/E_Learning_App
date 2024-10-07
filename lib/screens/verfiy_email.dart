@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:project_1st/navigation_screens/home.dart';
 import 'package:project_1st/our_navigation_bar.dart';
 import 'package:project_1st/shared/color.dart';
 import 'package:project_1st/shared/snackBar.dart';
@@ -20,7 +19,6 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
 
   @override
   void initState() {
-
     super.initState();
     isEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified;
 
@@ -52,7 +50,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
       setState(() {
         canResendEmail = true;
       });
-      if(!mounted)return;
+      if (!mounted) return;
     } catch (e) {
       showSnackBar(context, "ERROR => ${e.toString()}");
     }
@@ -60,7 +58,6 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     timer?.cancel();
     super.dispose();
   }
@@ -70,61 +67,63 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
     return isEmailVerified
         ? const OurNavigationbar()
         : Scaffold(
-      appBar: AppBar(
-        title: const Text("Verify Email"),
-        elevation: 0,
-        backgroundColor: appbarGreen,
-        foregroundColor: Colors.white,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text(
-              "A verification email has been sent to your email",
-              style: TextStyle(fontSize: 20),
-              textAlign: TextAlign.center,
+            appBar: AppBar(
+              title: const Text("Verify Email"),
+              elevation: 0,
+              backgroundColor: appbarGreen,
+              foregroundColor: Colors.white,
             ),
-            const SizedBox(
-              height: 33,
-            ),
-            ElevatedButton(
-              onPressed: () {
-                canResendEmail? sendVerificationEmail() : null;
-              },
-              style: ButtonStyle(
-                backgroundColor: WidgetStateProperty.all(btnGreen),
-                padding: WidgetStateProperty.all(const EdgeInsets.all(12)),
-                shape: WidgetStateProperty.all(RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8))),
+            body: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    "A verification email has been sent to your email",
+                    style: TextStyle(fontSize: 20),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(
+                    height: 33,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      canResendEmail ? sendVerificationEmail() : null;
+                    },
+                    style: ButtonStyle(
+                      backgroundColor: WidgetStateProperty.all(btnGreen),
+                      padding:
+                          WidgetStateProperty.all(const EdgeInsets.all(12)),
+                      shape: WidgetStateProperty.all(RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8))),
+                    ),
+                    child: const Text(
+                      "Resent Email",
+                      style: TextStyle(fontSize: 20, color: Colors.white),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 33,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      FirebaseAuth.instance.signOut();
+                    },
+                    style: ButtonStyle(
+                      backgroundColor: WidgetStateProperty.all(btnPink),
+                      padding:
+                          WidgetStateProperty.all(const EdgeInsets.all(12)),
+                      shape: WidgetStateProperty.all(RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8))),
+                    ),
+                    child: const Text(
+                      "Cancel",
+                      style: TextStyle(fontSize: 20, color: Colors.white),
+                    ),
+                  ),
+                ],
               ),
-              child: const Text(
-                "Resent Email",
-                style: TextStyle(fontSize: 20,color: Colors.white),
-              ),
             ),
-            const SizedBox(
-              height: 33,
-            ),
-            ElevatedButton(
-              onPressed: () {
-                FirebaseAuth.instance.signOut();
-              },
-              style: ButtonStyle(
-                backgroundColor: WidgetStateProperty.all(btnPink),
-                padding: WidgetStateProperty.all(const EdgeInsets.all(12)),
-                shape: WidgetStateProperty.all(RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8))),
-              ),
-              child: const Text(
-                "Cancel",
-                style: TextStyle(fontSize: 20,color: Colors.white),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+          );
   }
 }

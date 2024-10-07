@@ -1,3 +1,12 @@
+enum Category {
+  all,
+  mobiledevelopment,
+  webdevelopment,
+  ai,
+  datascience,
+  devops,
+}
+
 class ProgrammingCourse {
   final int id;
   final String name;
@@ -6,8 +15,10 @@ class ProgrammingCourse {
   final String link;
   final double price;
   final List<String> outlines;
+  final List<Category> categories;
 
   ProgrammingCourse({
+    required this.categories,
     required this.outlines,
     required this.price,
     required this.id,

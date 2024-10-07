@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:project_1st/firebase_options.dart';
 import 'package:project_1st/providers/google_signin.dart';
 import 'package:project_1st/screens/verfiy_email.dart';
@@ -16,35 +17,7 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (context) {
-          return GoogleSignInProvider();
-        }),
-      ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: StreamBuilder(
-          stream: FirebaseAuth.instance.authStateChanges(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(
-                  child: CircularProgressIndicator(
-                    color: Colors.white,
-                  ));
-            } else if (snapshot.hasError) {
-              return showSnackBar(context, "Something went wrong");
-            } else if (snapshot.hasData) {
-              return  const VerifyEmailPage();
-            } else {
-              return const Login();
-            }
-          },
-        ),
-      ),
-    ),
-  );
+  runApp(const ProviderScope(child: MainApp()));
 }
 
 ColorScheme myColorScheme =
@@ -66,7 +39,7 @@ class MainApp extends StatelessWidget {
               const IconThemeData().copyWith(color: myColorScheme.onPrimary),
           scaffoldBackgroundColor: myColorScheme.primaryFixed),
       debugShowCheckedModeBanner: false,
-      initialRoute: "/SplashScreen",
+      initialRoute: "/HomeScreen",
       routes: {
         "/LoginScreen": (_) => const Login(),
         "/HomeScreen": (_) => const OurNavigationbar(),

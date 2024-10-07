@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -19,7 +17,7 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-  bool isVisible = true;
+  bool isVisible = false;
   bool isLoading = false;
 
   signIn() async {
@@ -95,7 +93,7 @@ class _LoginState extends State<Login> {
                   color: Colors.purple[50]),
               child: TextFormField(
                 controller: passwordController,
-                obscureText: isVisible ? true : false,
+                obscureText: isVisible ? false : true,
                 keyboardType: TextInputType.visiblePassword,
                 textInputAction: TextInputAction.next,
                 decoration: InputDecoration(
