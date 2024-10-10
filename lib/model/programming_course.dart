@@ -16,6 +16,7 @@ class ProgrammingCourse {
   final double price;
   final List<String> outlines;
   final List<Category> categories;
+  bool enrolled = false;
 
   ProgrammingCourse({
     required this.categories,

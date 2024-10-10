@@ -49,3 +49,40 @@ class MainApp extends StatelessWidget {
     );
   }
 }
+// كود عبدالرحمن 
+
+// Future<void> main() async {
+//   WidgetsFlutterBinding.ensureInitialized();
+//   await Firebase.initializeApp(
+//     options: DefaultFirebaseOptions.currentPlatform,
+//   );
+//   runApp(
+//     MultiProvider(
+//       providers: [
+//         ChangeNotifierProvider(create: (context) {
+//           return GoogleSignInProvider();
+//         }),
+//       ],
+//       child: MaterialApp(
+//         debugShowCheckedModeBanner: false,
+//         home: StreamBuilder(
+//           stream: FirebaseAuth.instance.authStateChanges(),
+//           builder: (context, snapshot) {
+//             if (snapshot.connectionState == ConnectionState.waiting) {
+//               return const Center(
+//                   child: CircularProgressIndicator(
+//                     color: Colors.white,
+//                   ));
+//             } else if (snapshot.hasError) {
+//               return showSnackBar(context, "Something went wrong");
+//             } else if (snapshot.hasData) {
+//               return  const VerifyEmailPage();
+//             } else {
+//               return const Login();
+//             }
+//           },
+//         ),
+//       ),
+//     ),
+//   );
+// }
