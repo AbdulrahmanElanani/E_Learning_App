@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:project_1st/navigation_screens/home.dart';
-import 'package:project_1st/our_navigation_bar.dart';
 import 'package:project_1st/shared/color.dart';
 import 'package:project_1st/shared/snackBar.dart';
 
@@ -44,7 +43,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
 
   sendVerificationEmail() async {
     try {
-      await FirebaseAuth.instance.currentUser!.sendEmailVerification();
+      // await FirebaseAuth.instance.currentUser!.sendEmailVerification();
       setState(() {
         canResendEmail = false;
       });
@@ -60,7 +59,6 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     timer?.cancel();
     super.dispose();
   }
@@ -68,7 +66,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
   @override
   Widget build(BuildContext context) {
     return isEmailVerified
-        ? const OurNavigationbar()
+        ? const Home()
         : Scaffold(
       appBar: AppBar(
         title: const Text("Verify Email"),
@@ -91,7 +89,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
             ),
             ElevatedButton(
               onPressed: () {
-                canResendEmail? sendVerificationEmail() : null;
+                // canResendEmail? sendVerificationEmail() : null;
               },
               style: ButtonStyle(
                 backgroundColor: WidgetStateProperty.all(btnGreen),

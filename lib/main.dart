@@ -2,8 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:project_1st/firebase_options.dart';
+import 'package:project_1st/navigation_screens/home.dart';
 import 'package:project_1st/providers/google_signin.dart';
-import 'package:project_1st/screens/verfiy_email.dart';
 import 'package:project_1st/shared/snackBar.dart';
 import 'package:provider/provider.dart';
 import 'login.dart';
@@ -36,7 +36,7 @@ Future<void> main() async {
             } else if (snapshot.hasError) {
               return showSnackBar(context, "Something went wrong");
             } else if (snapshot.hasData) {
-              return  const VerifyEmailPage();
+              return  const Login();
             } else {
               return const Login();
             }

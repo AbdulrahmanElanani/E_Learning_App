@@ -8,7 +8,6 @@ class GoogleSignInProvider with ChangeNotifier {
   GoogleSignInAccount get user => _user!;
   googleLogin() async {
     final googleUser = await googleSignIn.signIn();
-    if (googleSignIn == null) return;
     _user = googleUser;
     final googleAuth = await googleUser?.authentication;
     final credential = GoogleAuthProvider.credential(
