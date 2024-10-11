@@ -1,4 +1,4 @@
-import '../model/programming_course.dart';
+import 'package:project_1st/model/programming_course.dart';
 
 List<ProgrammingCourse> programmingCourses = [
   ProgrammingCourse(
@@ -7,14 +7,20 @@ List<ProgrammingCourse> programmingCourses = [
     duration: 120,
     description:
         'Learn the basics of Dart programming language used for Flutter development.',
-    link: 'https://example.com/dart-course',
-    price: 200,
+    link:
+        'https://youtube.com/playlist?list=PL93xoMrxRJIsYc9L0XBSaiiuq01JTMQ_o&si=AdrGA4jQQviMa4J5',
+    price: 100,
     outlines: [
       'Introduction to Dart',
       'Variables and Data Types',
       'Control Flow Statements',
       'Functions and Methods',
       'Object-Oriented Programming in Dart',
+    ],
+    categories: [
+      Category.mobiledevelopment,
+      Category.webdevelopment,
+      Category.all
     ],
   ),
   ProgrammingCourse(
@@ -23,8 +29,9 @@ List<ProgrammingCourse> programmingCourses = [
     duration: 180,
     description:
         'Comprehensive course on how to build mobile applications using Flutter.',
-    link: 'https://example.com/flutter-course',
-    price: 200,
+    link:
+        'https://youtube.com/playlist?list=PL93xoMrxRJIvtIXjAiX15wcyNv-LOWZa9&si=Z-nm8aFt1DSNP30l',
+    price: 130,
     outlines: [
       'Introduction to Flutter',
       'Building UI with Widgets',
@@ -32,6 +39,7 @@ List<ProgrammingCourse> programmingCourses = [
       'Navigation and Routing',
       'Using APIs in Flutter',
     ],
+    categories: [Category.mobiledevelopment, Category.all],
   ),
   ProgrammingCourse(
     id: 3,
@@ -39,14 +47,20 @@ List<ProgrammingCourse> programmingCourses = [
     duration: 150,
     description:
         'Introduction to Java programming and its various applications.',
-    link: 'https://example.com/java-course',
-    price: 200,
+    link:
+        'https://youtube.com/playlist?list=PL1DUmTEdeA6K7rdxKiWJq6JIxTvHalY8f&si=b0iEygCUsrSATtig',
+    price: 170,
     outlines: [
       'Introduction to Java',
       'Variables and Data Types',
       'Loops and Conditional Statements',
       'Object-Oriented Programming',
       'Exception Handling',
+    ],
+    categories: [
+      Category.mobiledevelopment,
+      Category.webdevelopment,
+      Category.all
     ],
   ),
   ProgrammingCourse(
@@ -55,8 +69,9 @@ List<ProgrammingCourse> programmingCourses = [
     duration: 210,
     description:
         'Learn how to develop Android apps using Java programming language.',
-    link: 'https://example.com/android-java-course',
-    price: 200,
+    link:
+        'https://youtube.com/playlist?list=PL_c9BZzLwBRJLm0QETVj_XcN4jRsV4LkR&si=HBKBiXuXqqnnI4yk',
+    price: 250,
     outlines: [
       'Setting up Android Studio',
       'Building User Interfaces',
@@ -64,6 +79,7 @@ List<ProgrammingCourse> programmingCourses = [
       'Networking and APIs',
       'Publishing Apps to Play Store',
     ],
+    categories: [Category.mobiledevelopment, Category.all],
   ),
   ProgrammingCourse(
     id: 5,
@@ -71,8 +87,9 @@ List<ProgrammingCourse> programmingCourses = [
     duration: 140,
     description:
         'A comprehensive introduction to Python programming language and its use cases.',
-    link: 'https://example.com/python-course',
-    price: 200,
+    link:
+        'https://youtube.com/playlist?list=PLoP3S2S1qTfCUdNazAZY1LFALcUr0Vbs9&si=YbZZO35VPcu9DvLv',
+    price: 80,
     outlines: [
       'Introduction to Python',
       'Control Flow',
@@ -80,30 +97,37 @@ List<ProgrammingCourse> programmingCourses = [
       'File Handling',
       'Object-Oriented Programming',
     ],
+    categories: [Category.datascience, Category.ai, Category.all],
   ),
   ProgrammingCourse(
     id: 6,
-    name: 'Advanced Python Programming',
-    duration: 160,
+    name: 'Backend Development with Python',
+    duration: 120, // Duration in hours
     description:
-        'Deep dive into advanced Python topics such as file handling, OOP, and data structures.',
-    link: 'https://example.com/advanced-python-course',
-    price: 200,
+        'An in-depth course designed to teach you backend development using Python. Learn to build robust web applications and APIs using popular frameworks and tools in the Python ecosystem.',
+    link:
+        'https://youtube.com/playlist?list=PLynpHWDBs7h1e8dkxgO6jwUHaNb3UTGwQ&si=3JQr27-bLnzdRTJZ',
+    price: 400,
     outlines: [
-      'Advanced Data Structures',
-      'File Handling and I/O',
-      'Decorators and Generators',
-      'Object-Oriented Programming',
-      'Error and Exception Handling',
+      'Introduction to Backend Development and Python',
+      'Setting Up Your Python Development Environment',
+      'Working with Web Frameworks: Flask and Django',
+      'Building RESTful APIs with Flask',
+      'Database Integration: SQL with SQLite and PostgreSQL',
+      'User Authentication and Authorization',
+      'Error Handling and Logging',
+      'Deployment Strategies and Best Practices',
     ],
+    categories: [Category.all, Category.webdevelopment],
   ),
   ProgrammingCourse(
     id: 7,
     name: 'React for Beginners',
     duration: 130,
     description: 'Get started with React to build modern web applications.',
-    link: 'https://example.com/react-course',
-    price: 200,
+    link:
+        'https://youtube.com/playlist?list=PLYyqC4bNbCIdSZ-JayMLl4WO2Cr995vyS&si=z-SMmqB01cNO2inn',
+    price: 260,
     outlines: [
       'Introduction to React',
       'JSX and Components',
@@ -111,6 +135,7 @@ List<ProgrammingCourse> programmingCourses = [
       'React Hooks',
       'Handling Events',
     ],
+    categories: [Category.webdevelopment, Category.all],
   ),
   ProgrammingCourse(
     id: 8,
@@ -118,8 +143,9 @@ List<ProgrammingCourse> programmingCourses = [
     duration: 190,
     description:
         'Learn how to create server-side applications using Node.js and Express.js.',
-    link: 'https://example.com/nodejs-course',
-    price: 200,
+    link:
+        'https://youtube.com/playlist?list=PLpSOK_rijUlnoSM5bIlfmuKa3H7XaqAyF&si=knvz_c7U4ZQRhMJv',
+    price: 187,
     outlines: [
       'Introduction to Node.js',
       'Building APIs with Express.js',
@@ -127,21 +153,30 @@ List<ProgrammingCourse> programmingCourses = [
       'Authentication and Authorization',
       'Deploying Node.js Apps',
     ],
+    categories: [Category.webdevelopment, Category.all],
   ),
   ProgrammingCourse(
     id: 9,
-    name: 'Full Stack Development with MERN',
-    duration: 240,
+    name: 'API Development with Python and Flask',
+    duration: 100, // Duration in hours
     description:
-        'Become a full-stack developer by mastering MongoDB, Express, React, and Node.js.',
-    link: 'https://example.com/mern-course',
-    price: 200,
+        'Learn how to design and build RESTful APIs using Python and Flask. This course will cover everything from the basics of Flask to more advanced topics like authentication, database management, and deployment strategies.',
+    link:
+        'https://youtube.com/playlist?list=PLPBnj6azlABaelnh4bcmJ7VZNB_UIvhRt&si=-EMRWa-hUf3o2PYy',
+    price: 100,
     outlines: [
-      'Introduction to MERN Stack',
-      'Building REST APIs with Express',
-      'Frontend Development with React',
-      'Working with MongoDB',
-      'Deploying Full Stack Applications',
+      'Introduction to API Concepts and RESTful Architecture',
+      'Setting Up Flask and Creating Your First API',
+      'Routing and Request Handling',
+      'Database Integration with SQL and Flask-SQLAlchemy',
+      'Implementing User Authentication with JWT',
+      'Testing APIs with Postman',
+      'Error Handling and Logging Best Practices',
+      'Deploying Flask Applications with Docker',
+    ],
+    categories: [
+      Category.mobiledevelopment,
+      Category.all,
     ],
   ),
   ProgrammingCourse(
@@ -150,8 +185,9 @@ List<ProgrammingCourse> programmingCourses = [
     duration: 200,
     description:
         'Learn the fundamentals of machine learning using Python and popular libraries like TensorFlow.',
-    link: 'https://example.com/ml-python-course',
-    price: 200,
+    link:
+        'https://youtube.com/playlist?list=PLtsZ69x5q-X9j44MdSX-NGuOhGXOY0aqH&si=D0nJptQuvwsfK7Tb',
+    price: 199,
     outlines: [
       'Introduction to Machine Learning',
       'Supervised vs Unsupervised Learning',
@@ -159,6 +195,7 @@ List<ProgrammingCourse> programmingCourses = [
       'Neural Networks with TensorFlow',
       'Evaluating and Tuning Models',
     ],
+    categories: [Category.ai, Category.datascience, Category.all],
   ),
   ProgrammingCourse(
     id: 11,
@@ -166,7 +203,8 @@ List<ProgrammingCourse> programmingCourses = [
     duration: 180,
     description:
         'Understand the basics of AI, its applications, and key concepts like neural networks and deep learning.',
-    link: 'https://example.com/ai-course',
+    link:
+        'https://youtube.com/playlist?list=PLuNK096Q36cY97nBykqIRGGM2UiFtq4OQ&si=zYeIOIkXJJEsS9e1',
     price: 200,
     outlines: [
       'Introduction to Artificial Intelligence',
@@ -175,6 +213,7 @@ List<ProgrammingCourse> programmingCourses = [
       'AI Applications in Real-World',
       'Ethics in AI',
     ],
+    categories: [Category.ai, Category.all],
   ),
   ProgrammingCourse(
     id: 12,
@@ -182,8 +221,9 @@ List<ProgrammingCourse> programmingCourses = [
     duration: 220,
     description:
         'Learn data science concepts, including data analysis, visualization, and machine learning with Python.',
-    link: 'https://example.com/data-science-python-course',
-    price: 200,
+    link:
+        'https://youtube.com/playlist?list=PLMYF6NkLrdN9oTARJ9BE1EChtcsPjPEZQ&si=o1V-hXKjqiq6gnGG',
+    price: 210,
     outlines: [
       'Introduction to Data Science',
       'Data Analysis with Pandas',
@@ -191,6 +231,7 @@ List<ProgrammingCourse> programmingCourses = [
       'Machine Learning with Scikit-learn',
       'Deploying Data Science Projects',
     ],
+    categories: [Category.datascience, Category.all],
   ),
   ProgrammingCourse(
     id: 13,
@@ -198,8 +239,9 @@ List<ProgrammingCourse> programmingCourses = [
     duration: 110,
     description:
         'Learn to build responsive websites using HTML, CSS, and JavaScript.',
-    link: 'https://example.com/web-dev-course',
-    price: 200,
+    link:
+        'https://youtube.com/playlist?list=PLknwEmKsW8Otkp3ax3DWDWQufKy4RirWO&si=U4rPnuvE7YEhnyCy',
+    price: 360,
     outlines: [
       'Introduction to Web Development',
       'HTML Basics',
@@ -207,14 +249,16 @@ List<ProgrammingCourse> programmingCourses = [
       'JavaScript Fundamentals',
       'Responsive Design',
     ],
+    categories: [Category.webdevelopment, Category.all],
   ),
   ProgrammingCourse(
     id: 14,
     name: 'SQL for Beginners',
     duration: 100,
     description: 'Understand how to manage and query databases using SQL.',
-    link: 'https://example.com/sql-course',
-    price: 200,
+    link:
+        'https://youtube.com/playlist?list=PLxbVBWjVdAEj8TmOUKPG0avUmLqSoQOpf&si=wXVAdv_1jNtHyClT',
+    price: 138,
     outlines: [
       'Introduction to Databases',
       'Writing SQL Queries',
@@ -222,6 +266,7 @@ List<ProgrammingCourse> programmingCourses = [
       'Database Management',
       'SQL Best Practices',
     ],
+    categories: [Category.datascience, Category.all],
   ),
   ProgrammingCourse(
     id: 15,
@@ -229,8 +274,9 @@ List<ProgrammingCourse> programmingCourses = [
     duration: 170,
     description:
         'Learn the basics of DevOps practices and tools like Docker, Kubernetes, and CI/CD pipelines.',
-    link: 'https://example.com/devops-course',
-    price: 200,
+    link:
+        'https://youtube.com/playlist?list=PLQ5OGqigB8Vn4xo-RMeS1ra8WzxFqyCKN&si=bklbNvo1A9Wlz-XE',
+    price: 300,
     outlines: [
       'Introduction to DevOps',
       'Continuous Integration and Deployment',
@@ -238,5 +284,6 @@ List<ProgrammingCourse> programmingCourses = [
       'Containerization with Docker',
       'Kubernetes for Orchestration',
     ],
+    categories: [Category.devops, Category.all],
   ),
 ];

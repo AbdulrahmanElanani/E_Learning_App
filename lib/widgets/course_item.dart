@@ -58,14 +58,17 @@ class _CourseItemState extends ConsumerState<CourseItem> {
                           CrossAxisAlignment.start, // Align text to the start
                       children: [
                         Expanded(
-                          child: Text(
-                            widget.programmingCourse.name,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight:
-                                  FontWeight.bold, // Bold title for emphasis
+                          child: Hero(
+                            tag: widget.programmingCourse.id,
+                            child: Text(
+                              widget.programmingCourse.name,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight:
+                                    FontWeight.bold, // Bold title for emphasis
+                              ),
                             ),
                           ),
                         ),

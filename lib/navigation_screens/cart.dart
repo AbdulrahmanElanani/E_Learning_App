@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:project_1st/widgets/cart_item.dart';
 
 import '../drawer/mydrawer.dart';
 import '../providers/cart_provider.dart';
-import '../widgets/course_item.dart';
 
 class Cart extends ConsumerStatefulWidget {
   const Cart({super.key});
@@ -24,7 +24,7 @@ class _CartState extends ConsumerState<Cart> {
       ),
       body: ListView.separated(
         itemBuilder: (context, index) {
-          return CourseItem(programmingCourse: cartCourses[index]);
+          return CartItem(programmingCourse: cartCourses[index]);
         },
         separatorBuilder: (BuildContext context, int index) {
           return Container(
