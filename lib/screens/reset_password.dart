@@ -1,10 +1,11 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:project_1st/login.dart';
-import 'package:project_1st/shared/color.dart';
-import 'package:project_1st/shared/constant.dart';
-import 'package:project_1st/shared/snackBar.dart';
+
+import '../login.dart';
+import '../shared/color.dart';
+import '../shared/constant.dart';
+import '../shared/snackBar.dart';
 
 class ResetPassword extends StatefulWidget {
   const ResetPassword({super.key});

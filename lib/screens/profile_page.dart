@@ -8,10 +8,11 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:path/path.dart' show basename;
-import 'package:project_1st/shared/color.dart';
 import 'package:project_1st/shared/data_from_firestore.dart';
-import 'package:project_1st/shared/snackBar.dart';
-import 'package:project_1st/shared/user_image_from_firestore.dart';
+
+import '../shared/color.dart';
+import '../shared/snackBar.dart';
+import '../shared/user_image_from_firestore.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
