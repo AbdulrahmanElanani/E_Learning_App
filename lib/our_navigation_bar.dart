@@ -1,5 +1,6 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:project_1st/screens/mylearnings.dart';
 
 import 'main.dart';
 import 'navigation_screens/account.dart';
@@ -20,7 +21,7 @@ class _OurNavigationbarState extends State<OurNavigationbar> {
   List<Widget> pages = [
     const Account(),
     const Favourite(),
-    const Cart(),
+    const Mylearnings(),
     const Home()
   ];
 
@@ -42,7 +43,7 @@ class _OurNavigationbarState extends State<OurNavigationbar> {
           items: const [
             Icon(Icons.account_circle_outlined),
             Icon(Icons.favorite_outline_outlined),
-            Icon(Icons.local_grocery_store_outlined),
+            Icon(Icons.school),
             Icon(Icons.home_outlined),
           ],
         ),

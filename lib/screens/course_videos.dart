@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'dart:developer';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:project_1st/model/programming_course.dart';
@@ -12,6 +14,8 @@ class CourseVideos extends StatefulWidget {
   @override
   _CourseVideosState createState() => _CourseVideosState();
 }
+
+List videosData = [];
 
 class _CourseVideosState extends State<CourseVideos> {
   final String apiKey =
@@ -27,6 +31,7 @@ class _CourseVideosState extends State<CourseVideos> {
   void initState() {
     super.initState();
     fetchYouTubePlaylistVideos();
+    listenToVideos();
   }
 
   String extractPlaylistId(String url) {
@@ -80,12 +85,17 @@ class _CourseVideosState extends State<CourseVideos> {
     } catch (e) {
       print('Error fetching playlist videos: $e');
     }
+    if (widget.programmingCourse.completed.isEmpty) {
+      widget.programmingCourse.completed = List.filled(videoUrls.length, false);
+    }
+    isCompleted = widget.programmingCourse.completed;
   }
 
   void goNext(int index) {
     index < videoUrls.length - 1
         ? Navigator.of(context).push(MaterialPageRoute(
             builder: (_) => Video(
+                  addVideo: addVideo,
                   goBack: goBack,
                   goNext: goNext,
                   description: videoDescriptions[index + 1],
@@ -100,6 +110,7 @@ class _CourseVideosState extends State<CourseVideos> {
     index > 0
         ? Navigator.of(context).push(MaterialPageRoute(
             builder: (_) => Video(
+                  addVideo: addVideo,
                   goBack: goBack,
                   goNext: goNext,
                   description: videoDescriptions[index - 1],
@@ -108,6 +119,53 @@ class _CourseVideosState extends State<CourseVideos> {
                   videoId: videoIds[index - 1],
                 )))
         : null;
+  }
+
+  CollectionReference videosDone =
+      FirebaseFirestore.instance.collection('videos');
+  void addVideo(String id) async {
+    check(id)
+        ? null
+        : await videosDone
+            .add({"id": id})
+            .then((value) => log("video Added"))
+            .catchError((error) => log("Failed to add user: $error"));
+  }
+
+  void removeVideo(String id) async {
+    // Call the user's CollectionReference to add a new user
+    await videosDone
+        .doc(id)
+        .delete()
+        .then((value) => log("video Added"))
+        .catchError((error) => log("Failed to add user: $error"));
+  }
+
+  void listenToVideos() {
+    // Listen to real-time updates from Firestore collection
+    videosDone.snapshots().listen((snapshot) {
+      setState(() {
+        videosData =
+            snapshot.docs; // Update data list with the latest documents
+      });
+    });
+  }
+
+  bool check(String id) {
+    for (final video in videosData) {
+      if (video["id"] == id) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  dynamic getId(String id) {
+    for (final video in videosData) {
+      if (video["id"] == id) {
+        return video.id;
+      }
+    }
   }
 
   @override
@@ -123,7 +181,6 @@ class _CourseVideosState extends State<CourseVideos> {
           : ListView.builder(
               itemCount: videoUrls.length,
               itemBuilder: (context, index) {
-                isCompleted.add(false);
                 return Card(
                   margin: const EdgeInsets.symmetric(
                       vertical: 8.0, horizontal: 16.0),
@@ -157,15 +214,16 @@ class _CourseVideosState extends State<CourseVideos> {
                       style: TextStyle(color: Colors.grey[600], fontSize: 14.0),
                     ),
                     trailing: Checkbox(
-                        value: isCompleted[index],
+                        value: check(videoIds[index]),
                         onChanged: (e) {
-                          setState(() {
-                            isCompleted[index] = e!;
-                          });
+                          check(videoIds[index])
+                              ? removeVideo(getId(videoIds[index]))
+                              : addVideo(videoIds[index]);
                         }),
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
+                    onTap: () async {
+                      await Navigator.of(context).push(MaterialPageRoute(
                           builder: (_) => Video(
+                                addVideo: addVideo,
                                 goBack: goBack,
                                 goNext: goNext,
                                 description: videoDescriptions[index],

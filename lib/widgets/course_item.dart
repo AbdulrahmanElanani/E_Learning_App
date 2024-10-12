@@ -1,24 +1,69 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'dart:developer';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import '../model/programming_course.dart';
-import '../providers/favourites_provider.dart';
 import '../screens/course_details.dart';
 
-class CourseItem extends ConsumerStatefulWidget {
+class CourseItem extends StatefulWidget {
   const CourseItem({super.key, required this.programmingCourse});
 
   final ProgrammingCourse programmingCourse;
 
   @override
-  ConsumerState<CourseItem> createState() => _CourseItemState();
+  State<CourseItem> createState() => _CourseItemState();
 }
 
-class _CourseItemState extends ConsumerState<CourseItem> {
+List data = [];
+
+class _CourseItemState extends State<CourseItem> {
+  CollectionReference favorites =
+      FirebaseFirestore.instance.collection('favorites');
+
+  void addFavorite(ProgrammingCourse favCourse) async {
+    // Call the user's CollectionReference to add a new user
+    await favorites
+        .add({"id": favCourse.id})
+        .then((value) => log("User Added"))
+        .catchError((error) => log("Failed to add user: $error"));
+  }
+
+  void removeFavorite(var x) async {
+    // Call the user's CollectionReference to add a new user
+    await favorites
+        .doc(x)
+        .delete()
+        .then((value) => log("User deleted"))
+        .catchError((error) => log("Failed to delete user: $error"));
+
+    setState(() {});
+  }
+
+  void listenToFavorites() {
+    // Listen to real-time updates from Firestore collection
+    favorites.snapshots().listen((snapshot) {
+      setState(() {
+        data = snapshot.docs; // Update data list with the latest documents
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    listenToFavorites(); // Set up real-time listener for favorites
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    var favouriteCourses = ref.watch(favouriteCourseProvidier);
-    var isCourseExist = favouriteCourses.contains(widget.programmingCourse);
+    var isExist = false;
+    for (final x in data) {
+      if (x["id"] == widget.programmingCourse.id) {
+        setState(() {
+          isExist = true;
+        });
+      }
+    }
     return InkWell(
         onTap: () {
           Navigator.of(context).push(MaterialPageRoute(
@@ -97,17 +142,23 @@ class _CourseItemState extends ConsumerState<CourseItem> {
                         .end, // Align trailing text to the end
                     children: [
                       IconButton(
-                        icon: Icon(
-                          isCourseExist
-                              ? Icons.favorite
-                              : Icons
-                                  .favorite_border, // Use a border to show it's not favorited yet
-                          color: Colors.red, // Red color for the favorite icon
-                        ),
-                        onPressed: () => ref
-                            .read(favouriteCourseProvidier.notifier)
-                            .toggleFavorite(widget.programmingCourse),
-                      ),
+                          icon: Icon(
+                            isExist
+                                ? Icons.favorite
+                                : Icons
+                                    .favorite_border, // Use a border to show it's not favorited yet
+                            color:
+                                Colors.red, // Red color for the favorite icon
+                          ),
+                          onPressed: () {
+                            for (final fav in data) {
+                              if (fav["id"] == widget.programmingCourse.id) {
+                                removeFavorite(fav.id);
+                                return;
+                              }
+                            }
+                            addFavorite(widget.programmingCourse);
+                          }),
                       Row(
                         children: [
                           Text(
@@ -126,16 +177,6 @@ class _CourseItemState extends ConsumerState<CourseItem> {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 5),
-                      Text(
-                        "${widget.programmingCourse.price} \$", // Display the price here
-                        style: const TextStyle(
-                          fontSize: 16,
-                          color: Colors.green, // Highlight the price in green
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-
                       // Spacing between price and favorite icon
                     ],
                   ),

@@ -1,21 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-
+import 'package:project_1st/data/course_data.dart';
+import 'package:project_1st/model/programming_course.dart';
 import '../drawer/mydrawer.dart';
-import '../providers/favourites_provider.dart';
 import '../widgets/course_item.dart';
 
-class Favourite extends ConsumerStatefulWidget {
+class Favourite extends StatefulWidget {
   const Favourite({super.key});
 
   @override
-  ConsumerState<Favourite> createState() => _FavouriteState();
+  State<Favourite> createState() => _FavouriteState();
 }
 
-class _FavouriteState extends ConsumerState<Favourite> {
+class _FavouriteState extends State<Favourite> {
+  List<int> ids = [];
+  List<ProgrammingCourse> favCourses = [];
+
   @override
   Widget build(BuildContext context) {
-    var favouriteCourses = ref.watch(favouriteCourseProvidier);
+    for (final x in data) {
+      ids.add(x["id"]);
+    }
+    for (final x in programmingCourses) {
+      if (ids.contains(x.id)) {
+        favCourses.add(x);
+      }
+    }
     return Scaffold(
       drawer: const MyDrawer(),
       appBar: AppBar(
@@ -23,7 +32,7 @@ class _FavouriteState extends ConsumerState<Favourite> {
       ),
       body: ListView.separated(
         itemBuilder: (context, index) {
-          return CourseItem(programmingCourse: favouriteCourses[index]);
+          return CourseItem(programmingCourse: favCourses[index]);
         },
         separatorBuilder: (BuildContext context, int index) {
           return Container(
@@ -31,7 +40,7 @@ class _FavouriteState extends ConsumerState<Favourite> {
             height: 1,
           );
         },
-        itemCount: favouriteCourses.length,
+        itemCount: ids.length,
       ),
     );
   }

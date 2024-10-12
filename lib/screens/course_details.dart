@@ -1,12 +1,12 @@
 import 'dart:convert';
+import 'dart:developer';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:project_1st/screens/course_videos.dart';
 import '../model/programming_course.dart';
-import '../providers/cart_provider.dart';
 import 'package:http/http.dart' as http;
-import '../providers/favourites_provider.dart';
 
 class CourseDetails extends ConsumerStatefulWidget {
   const CourseDetails({super.key, required this.programmingCourse});
@@ -19,11 +19,15 @@ class CourseDetails extends ConsumerStatefulWidget {
 
 String addOrRemove = 'Add to Cart';
 String enroll = "Enroll Now";
+List data = [];
+List dataCourses = [];
 
 class _CourseDetailsState extends ConsumerState<CourseDetails> {
   @override
   void initState() {
     fetchYouTubePlaylistVideos();
+    listenToFavorites();
+    listenToCourses();
     super.initState();
   }
 
@@ -86,13 +90,75 @@ class _CourseDetailsState extends ConsumerState<CourseDetails> {
     }
   }
 
+  CollectionReference favorites =
+      FirebaseFirestore.instance.collection('favorites');
+
+  void addFavorite(ProgrammingCourse favCourse) async {
+    // Call the user's CollectionReference to add a new user
+    await favorites
+        .add({"id": favCourse.id})
+        .then((value) => log("User Added"))
+        .catchError((error) => log("Failed to add user: $error"));
+  }
+
+  void removeFavorite(var x) async {
+    // Call the user's CollectionReference to add a new user
+    await favorites
+        .doc(x)
+        .delete()
+        .then((value) => log("User deleted"))
+        .catchError((error) => log("Failed to delete user: $error"));
+  }
+
+  void listenToFavorites() {
+    // Listen to real-time updates from Firestore collection
+    favorites.snapshots().listen((snapshot) {
+      setState(() {
+        data = snapshot.docs; // Update data list with the latest documents
+      });
+    });
+  }
+
+  CollectionReference courses =
+      FirebaseFirestore.instance.collection('courses');
+
+  void addCourse(ProgrammingCourse favCourse) async {
+    // Call the user's CollectionReference to add a new user
+    await courses
+        .add({"id": favCourse.id})
+        .then((value) => log("User Added"))
+        .catchError((error) => log("Failed to add user: $error"));
+  }
+
+  void listenToCourses() {
+    // Listen to real-time updates from Firestore collection
+    courses.snapshots().listen((snapshot) {
+      setState(() {
+        dataCourses =
+            snapshot.docs; // Update data list with the latest documents
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    var favouriteCourses = ref.watch(favouriteCourseProvidier);
-    var isCourseExist = favouriteCourses.contains(widget.programmingCourse);
+    var isExist = false;
+    for (final x in data) {
+      if (x["id"] == widget.programmingCourse.id) {
+        setState(() {
+          isExist = true;
+        });
+      }
+    }
+    var isCourseExist = false;
+    for (final x in dataCourses) {
+      if (x["id"] == widget.programmingCourse.id) {
+        setState(() {
+          isCourseExist = true;
+        });
+      }
+    }
 
-    var cartCourses = ref.watch(cartProvidier);
-    cartCourses.contains(widget.programmingCourse);
     return Scaffold(
       appBar: AppBar(
         title: Hero(
@@ -111,12 +177,16 @@ class _CourseDetailsState extends ConsumerState<CourseDetails> {
                     .withOpacity(.2),
               ),
               onPressed: () {
-                ref
-                    .read(favouriteCourseProvidier.notifier)
-                    .toggleFavorite(widget.programmingCourse);
+                for (final fav in data) {
+                  if (fav["id"] == widget.programmingCourse.id) {
+                    removeFavorite(fav.id);
+                    return;
+                  }
+                }
+                addFavorite(widget.programmingCourse);
               },
               icon: Icon(
-                isCourseExist ? Icons.favorite : Icons.favorite_border,
+                isExist ? Icons.favorite : Icons.favorite_border,
                 color: Colors.red[400],
               ))
         ],
@@ -225,17 +295,6 @@ class _CourseDetailsState extends ConsumerState<CourseDetails> {
                       ),
                       const SizedBox(height: 12),
 
-                      // Price section with bold styling
-                      Text(
-                        'Price: \$${widget.programmingCourse.price.toStringAsFixed(2)}',
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.green,
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-
                       // Divider for separating buttons
                       Divider(
                         color: Colors.grey[300],
@@ -245,32 +304,10 @@ class _CourseDetailsState extends ConsumerState<CourseDetails> {
 
                       // Buttons section
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           ElevatedButton.icon(
                             onPressed: () {
-                              ref
-                                  .read(cartProvidier.notifier)
-                                  .toggleCart(widget.programmingCourse);
-                              convertBetweenAddOrRemove();
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.orange,
-                              foregroundColor: Colors
-                                  .white, // Color for the add to cart button
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 16, vertical: 10),
-                            ),
-                            icon: const Icon(Icons.shopping_cart),
-                            label: Text(addOrRemove),
-                          ),
-                          ElevatedButton.icon(
-                            onPressed: () {
-                              if (enroll == "Enroll Now") {
-                                setState(() {
-                                  widget.programmingCourse.enrolled = true;
-                                });
-                              }
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -278,6 +315,13 @@ class _CourseDetailsState extends ConsumerState<CourseDetails> {
                                             programmingCourse:
                                                 widget.programmingCourse,
                                           )));
+                              for (final course in dataCourses) {
+                                if (course["id"] ==
+                                    widget.programmingCourse.id) {
+                                  return;
+                                }
+                              }
+                              addCourse(widget.programmingCourse);
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor:
@@ -287,7 +331,7 @@ class _CourseDetailsState extends ConsumerState<CourseDetails> {
                                   horizontal: 16, vertical: 10),
                             ),
                             icon: const Icon(Icons.check_circle),
-                            label: Text(!widget.programmingCourse.enrolled
+                            label: Text(!isCourseExist
                                 ? "Enroll Now"
                                 : "Enrolled \nGo to Videos"),
                           ),

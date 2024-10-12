@@ -1,20 +1,80 @@
+import 'dart:developer';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:project_1st/data/course_data.dart';
+import 'package:project_1st/drawer/mydrawer.dart';
 import 'package:project_1st/model/programming_course.dart';
+import 'package:project_1st/screens/course_details.dart';
+import 'package:project_1st/widgets/cart_item.dart';
 import 'package:project_1st/widgets/course_item.dart';
 
-class Mylearnings extends StatelessWidget {
-  Mylearnings({super.key});
-  List<ProgrammingCourse> enrolledCourses =
-      programmingCourses.where((e) => e.enrolled == true).toList();
+class Mylearnings extends StatefulWidget {
+  const Mylearnings({super.key});
+
+  @override
+  State<Mylearnings> createState() => _MylearningsState();
+}
+
+List dataCourses = [];
+
+class _MylearningsState extends State<Mylearnings> {
+  CollectionReference courses =
+      FirebaseFirestore.instance.collection('courses');
+
+  void removeCourse(var x) async {
+    // Call the user's CollectionReference to add a new user
+    await courses
+        .doc(x)
+        .delete()
+        .then((value) => log("User Added"))
+        .catchError((error) => log("Failed to add user: $error"));
+  }
+
+  void listenToCourses() {
+    // Listen to real-time updates from Firestore collection
+    courses.snapshots().listen((snapshot) {
+      setState(() {
+        dataCourses =
+            snapshot.docs; // Update data list with the latest documents
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    listenToCourses();
+    super.initState();
+  }
+
+  List<int> ids = [];
+  List<ProgrammingCourse> enrolledCourses = [];
+
   @override
   Widget build(BuildContext context) {
+    for (final x in dataCourses) {
+      ids.add(x["id"]);
+    }
+    for (final x in programmingCourses) {
+      if (ids.contains(x.id)) {
+        enrolledCourses.add(x);
+      }
+    }
+
     return Scaffold(
-      appBar: AppBar(),
+      drawer: const MyDrawer(),
+      appBar: AppBar(
+        title: const Text("My Learning"),
+      ),
       body: ListView.builder(
-        itemCount: enrolledCourses.length,
+        itemCount: dataCourses.length,
         itemBuilder: (context, index) {
-          return CourseItem(programmingCourse: enrolledCourses[index]);
+          return Dismissible(
+              key: ValueKey(dataCourses[index]),
+              onDismissed: (direction) {
+                removeCourse(dataCourses[index].id);
+              },
+              child: CartItem(programmingCourse: enrolledCourses[index]));
         },
       ),
     );

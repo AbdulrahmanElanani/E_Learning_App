@@ -36,7 +36,7 @@ Future<void> main() async {
             } else if (snapshot.hasError) {
               return showSnackBar(context, "Something went wrong");
             } else if (snapshot.hasData) {
-              return  const Home();
+              return  const Login();
             } else {
               return const Login();
             }
